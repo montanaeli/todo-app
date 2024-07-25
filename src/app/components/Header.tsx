@@ -1,4 +1,4 @@
-import MoonIcon from '@/app/components/icons/MoonIcon'
+import MoonIcon from '@/app/components/icons/IconMoon'
 
 const Header = () => {
     return (
