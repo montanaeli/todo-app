@@ -8,7 +8,7 @@ interface Props {
 
 const TodoList = ({ todos, removeTodo, updateTodo }: Props) => {
     return (
-        <div className="mt-8 rounded-md bg-white [&>article]:p-4">
+        <div className="mt-8 overflow-hidden rounded-md bg-white transition-all duration-1000 dark:bg-gray-800 [&>article]:p-4">
             {todos.map((todo: Todo) => (
                 <TodoItem
                     key={todo.id}

@@ -1,42 +1,49 @@
 'use client'
 
-import { useState } from 'react'
-import Header from './components/Header'
-import TodoComputed from './components/TodoComputed'
-import TodoCreate from './components/TodoCreate'
-import TodoFilter from './components/TodoFilter'
-import TodoList from './components/TodoList'
+import { useEffect, useState } from 'react'
+import Header from '../components/Header'
+import TodoComputed from '../components/TodoComputed'
+import TodoCreate from '../components/TodoCreate'
+import TodoFilter from '../components/TodoFilter'
+import TodoList from '../components/TodoList'
 
-const initialStateTodos = [
-    {
-        id: 1,
-        title: 'Complete online Javascript bluuweb curse',
-        completed: true,
-    },
-    {
-        id: 2,
-        title: 'Go to the gym',
-        completed: false,
-    },
-    {
-        id: 3,
-        title: '10 minutes meditation',
-        completed: false,
-    },
-    {
-        id: 4,
-        title: 'Pick up groceries',
-        completed: false,
-    },
-    {
-        id: 5,
-        title: 'Complete todo app from Frontend Mentor',
-        completed: false,
-    },
-]
+// const initialStateTodos = [
+//     {
+//         id: 1,
+//         title: 'Complete online Javascript bluuweb curse',
+//         completed: true,
+//     },
+//     {
+//         id: 2,
+//         title: 'Go to the gym',
+//         completed: false,
+//     },
+//     {
+//         id: 3,
+//         title: '10 minutes meditation',
+//         completed: false,
+//     },
+//     {
+//         id: 4,
+//         title: 'Pick up groceries',
+//         completed: false,
+//     },
+//     {
+//         id: 5,
+//         title: 'Complete todo app from Frontend Mentor',
+//         completed: false,
+//     },
+// ]
+
+const storedTodos = localStorage.getItem('todos')
+const initialStateTodos = storedTodos ? JSON.parse(storedTodos) : []
 
 export default function Home() {
     const [todos, setTodos] = useState<Todo[]>(initialStateTodos)
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos])
 
     const createTodo = ({ title }: any) => {
         const newTodo = {
@@ -85,9 +92,9 @@ export default function Home() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-300 bg-[url('../../assets/images/bg-mobile-light.jpg')] bg-contain bg-no-repeat">
+        <div className="min-h-screen bg-gray-300 bg-[url('../../assets/images/bg-mobile-light.jpg')] bg-contain bg-no-repeat md:bg-[url('../../assets/images/bg-desktop-light.jpg')] dark:bg-gray-900 dark:bg-[url('../../assets/images/bg-mobile-dark.jpg')] md:dark:bg-[url('../../assets/images/bg-desktop-light.jpg')]">
             <Header />
-            <main className="container mx-auto mt-8 px-4">
+            <main className="container mx-auto mt-8 px-4 md:max-w-xl">
                 <TodoCreate createTodo={createTodo} />
                 <TodoList
                     todos={filteredTodos()}
@@ -100,7 +107,7 @@ export default function Home() {
                 />
                 <TodoFilter changeFilter={changeFilter} filter={filter} />
             </main>
-            <footer className="mt-8 text-center">
+            <footer className="mt-8 text-center dark:text-gray-400">
                 Drag and drop to reorder list
             </footer>
         </div>
