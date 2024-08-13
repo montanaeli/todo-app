@@ -17,7 +17,6 @@ const TodoItem = React.forwardRef<HTMLElement, Props>(
                 ref={ref}
                 className="flex gap-4 border-b border-b-gray-300"
             >
-                {/* <button className="inline-block h-5 w-5 flex-none items-center rounded-full border-2"></button> */}
                 <button
                     className={`h-5 w-5 flex-none rounded-full border-2 ${
                         completed
@@ -40,5 +39,7 @@ const TodoItem = React.forwardRef<HTMLElement, Props>(
         )
     }
 )
+
+TodoItem.displayName = 'TodoItem'
 
 export default TodoItem

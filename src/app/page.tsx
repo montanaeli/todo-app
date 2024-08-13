@@ -9,14 +9,23 @@ import TodoList from '../components/TodoList'
 
 import { DragDropContext } from '@hello-pangea/dnd'
 
-const storedTodos = localStorage.getItem('todos')
-const initialStateTodos = storedTodos ? JSON.parse(storedTodos) : []
-
 export default function Home() {
-    const [todos, setTodos] = useState<Todo[]>(initialStateTodos)
+    const [todos, setTodos] = useState<Todo[] | []>([])
+
+    const [todosInitialized, setTodosInitialized] = useState<boolean>(false)
 
     useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos))
+        // TODO: Improvement, use @uidotdev/usehooks to avoid setting todos to the localstorage
+        const storedTodos = localStorage.getItem('todos')
+        const initialStateTodos = storedTodos ? JSON.parse(storedTodos) : []
+        setTodos(initialStateTodos)
+        setTodosInitialized(true)
+    }, [])
+
+    useEffect(() => {
+        if (todosInitialized) {
+            localStorage.setItem('todos', JSON.stringify(todos))
+        }
     }, [todos])
 
     const createTodo = ({ title }: any) => {
@@ -89,7 +98,7 @@ export default function Home() {
                         todos={filteredTodos()}
                         removeTodo={removeTodo}
                         updateTodo={updateTodo}
-                        setTodos={setTodos}
+                        setTodos={() => {}}
                     />
                 </DragDropContext>
                 <TodoComputed
